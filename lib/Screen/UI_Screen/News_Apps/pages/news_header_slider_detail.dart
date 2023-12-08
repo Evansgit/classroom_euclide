@@ -1,0 +1,253 @@
+import 'package:crypto_template/Screen/UI_Screen/News_Apps/models/News/newsHeaderModel.dart';
+import 'package:flutter/material.dart';
+
+class headerSliderDetail extends StatefulWidget {
+  newsHeader? item;
+
+  headerSliderDetail({Key? key, this.item}) : super(key: key);
+
+  _headerSliderDetailState createState() => _headerSliderDetailState(item);
+}
+
+class _headerSliderDetailState extends State<headerSliderDetail> {
+  newsHeader? item;
+  _headerSliderDetailState(this.item);
+
+  @override
+  Widget build(BuildContext context) {
+    double _fullHeight = MediaQuery.of(context).size.height;
+
+    /// Hero animation for image
+    final hero = Hero(
+      tag: 'hero-tag-${item!.id}',
+      child: new DecoratedBox(
+        decoration: new BoxDecoration(
+          image: new DecorationImage(
+            fit: BoxFit.cover,
+            image: new NetworkImage(item!.imageUrl!),
+          ),
+          shape: BoxShape.rectangle,
+        ),
+        child: Container(
+          margin: EdgeInsets.only(top: 130.0),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: FractionalOffset.bottomCenter,
+              end: FractionalOffset.topCenter,
+              colors: [
+                const Color(0xFF000000),
+                const Color(0x00000000),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    double _height = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
+          scrollDirection: Axis.vertical,
+          slivers: <Widget>[
+            SliverPersistentHeader(
+              delegate: MySliverAppBar(
+                  expandedHeight: _height - 0.0,
+                  img: item!.imageUrl,
+                  id: item!.id,
+                  title: item!.title,
+                  category: item!.category),
+              pinned: true,
+            ),
+            SliverToBoxAdapter(
+                child: Column(children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 40.0, left: 20.0, right: 20.0, bottom: 20.0),
+                child: Text(
+                  item!.desc1!,
+                  style: TextStyle(
+                      fontFamily: "Sofia",
+                      color: Colors.black,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
+                child: Text(
+                  item!.desc2!,
+                  style: TextStyle(
+                      fontFamily: "Sofia",
+                      color: Colors.black,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
+                child: Text(
+                  item!.desc3!,
+                  style: TextStyle(
+                      fontFamily: "Sofia",
+                      color: Colors.black,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+              SizedBox(
+                height: 50.0,
+              )
+            ])),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MySliverAppBar extends SliverPersistentHeaderDelegate {
+  final double expandedHeight;
+
+  String? img, id, title, category;
+
+  MySliverAppBar(
+      {required this.expandedHeight,
+      this.img,
+      this.id,
+      this.title,
+      this.category});
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Container(
+          height: 50.0,
+          width: double.infinity,
+          color: Color(0xFF172E4D),
+        ),
+        Opacity(
+          opacity: (1 - shrinkOffset / expandedHeight),
+          child: Hero(
+            transitionOnUserGestures: true,
+            tag: 'hero-tag-${id}',
+            child: new DecoratedBox(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  fit: BoxFit.cover,
+                  image: new NetworkImage(img!),
+                ),
+                shape: BoxShape.rectangle,
+              ),
+              child: Container(
+                margin: EdgeInsets.only(top: 130.0),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: FractionalOffset.bottomCenter,
+                    end: FractionalOffset.topCenter,
+                    colors: <Color>[
+                      const Color(0xFF000000),
+                      const Color(0x00000000),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: Opacity(
+            opacity: (1 - shrinkOffset / expandedHeight),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 30,
+                    child: Text(
+                      title!,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22.5,
+                          fontFamily: "Sofia",
+                          fontWeight: FontWeight.w700),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Container(
+                    child: Text(
+                      category!,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.5,
+                          fontFamily: "Sofia",
+                          fontWeight: FontWeight.w400),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0, left: 20.0),
+                      child: Icon(Icons.arrow_back),
+                    ))),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "News",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Sofia",
+                  fontWeight: FontWeight.w700,
+                  fontSize: (expandedHeight / 40) - (shrinkOffset / 40) + 18,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 36.0,
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  double get maxExtent => expandedHeight;
+
+  @override
+  double get minExtent => kToolbarHeight;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
+}

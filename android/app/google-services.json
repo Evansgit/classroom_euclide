@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "554552901493",
+    "project_id": "biguiinterface",
+    "storage_bucket": "biguiinterface.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554552901493:android:b02e99d5bcfa84c127dd3c",
+        "android_client_info": {
+          "package_name": "com.example.bigui_interface"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh1ounnOAaiArVoVfWuqCa_Uj_QDKO4J8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

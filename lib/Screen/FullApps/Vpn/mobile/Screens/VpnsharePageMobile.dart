@@ -1,0 +1,96 @@
+import 'package:flutter/material.dart';
+import 'package:share/share.dart';
+import 'package:crypto_template/Screen/FullApps/Vpn/widget/customDivider.dart';
+import 'package:crypto_template/Library/Constant/SmartKitColor.dart';
+
+class VpnSharePageMobile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: vpn11,
+      appBar: vpnSetAppbar("Invite Friends") as PreferredSizeWidget?,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _inviteFriendsWidget(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _inviteFriendsWidget(BuildContext bcontext) {
+    return Expanded(
+      child: Center(
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Icon(
+                Icons.share,
+                color: Colors.blue,
+              ),
+              ColumnDivider(),
+              SizedBox(height: 20),
+              Text(
+                "Share free VPN experince",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: vpn22,
+                    decoration: TextDecoration.underline),
+                textAlign: TextAlign.center,
+              ),
+              ColumnDivider(),
+              Text(
+                "Help your friend stay anonymous, access Restricted content and enjoy streaming services from all regions with Free VPN APPS.",
+                style: TextStyle(fontSize: 15, color: vpn77),
+                textAlign: TextAlign.center,
+              ),
+              ColumnDivider(),
+              SizedBox(height: 20),
+              Center(
+                child: Container(
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: vpn22.withOpacity(.3),
+                      blurRadius: 10,
+                      offset: Offset(0, 5),
+                    )
+                  ], borderRadius: BorderRadius.circular(10), color: vpn22),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: vpn22, padding:
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                    child: Text(
+                      "Share With Friend",
+                      style: Theme.of(bcontext)
+                          .textTheme
+                          .titleMedium!
+                          .merge(TextStyle(color: Colors.white)),
+                    ),
+                    onPressed: _shareClick,
+                  ),
+                ),
+              ),
+              ColumnDivider(space: 80)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _shareClick() async {
+    Share.share(
+      "Check this cool vpn!\nhttps://play.google.com/store/apps/details?id=" +
+          (""),
+    );
+  }
+}
